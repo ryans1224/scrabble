@@ -12,7 +12,7 @@ $dictionary = new Dictionary($boot);
 
 $scrabble = new Scrabble($dictionary);
 
-$rack = "hjkhkaseiwiq";
+$rack = isset($_GET["rack"]) ? $_GET["rack"] : "hjkhkaseiwiq";
 
 /**
  * Engine = $scrabble
@@ -20,4 +20,17 @@ $rack = "hjkhkaseiwiq";
  * to run a match use the method matchInDictionary
  * this will return an array of words and scores
  */
-var_dump($scrabble->matchInDictionary($rack));
+
+echo "<form>";
+echo "<input type='text' name='rack' value='$rack'>";
+echo "<input type='submit'>";
+echo "</form>";
+
+$results = $scrabble->matchInDictionary($rack);
+
+if(count($results) == 0) echo "No matching words for that rack";
+
+else foreach($results as $word => $score){
+    echo "<b>$word</b> - ($score)</br>";
+};
+
